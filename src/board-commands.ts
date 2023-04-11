@@ -134,7 +134,7 @@ const moveIsBlocked = (squareToMoveFrom: Square, squareToMoveTo: Square, board: 
 
         let currentSquare = getSquare(currentFile, currentRank, board);
         if (!!currentSquare && currentSquare.piece !== undefined) {
-            console.log(`${loggingPrefix}${functionPrefix}found piece blocking at ${currentSquare.file}${currentSquare.rank}, ${currentSquare.piece}`)
+            console.log(`${loggingPrefix}${functionPrefix}move is blocked`)
             return true;
         }
         currentRank += rankDelta;
@@ -185,7 +185,7 @@ const isLegalBishopMove = (squareToMoveFrom: Square, squareToMoveTo: Square) => 
 
     const rankDiff = Math.abs(getRankDiff(squareToMoveFrom, squareToMoveTo));
     const fileDiff = Math.abs(getFileDiff(squareToMoveFrom.file, squareToMoveTo.file));
-    console.debug(`${loggingPrefix}${functionPrefix}rankDiff: ${rankDiff}, fileDiff: ${fileDiff}`);
+    // console.debug(`${loggingPrefix}${functionPrefix}rankDiff: ${rankDiff}, fileDiff: ${fileDiff}`);
 
     const bishipMoveIsDiagonal = rankDiff === fileDiff;
     if (!bishipMoveIsDiagonal) {
