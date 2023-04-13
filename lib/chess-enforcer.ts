@@ -25,15 +25,11 @@ export interface Piece { color?: Team; description?: PieceDescription; symbol?: 
 export interface Square { color: Team, piece?: Piece, rank: Rank, file: string };
 export type Board = Square[];
 
-const fetchOpts: RequestInit = {
-    mode: "no-cors"
-}
-
 /**
  * @returns A board with all pieces in starting configuration
  */
 export const GetNewBoard = async (): Promise<Board> => {
-    const res = await fetch('https://us-central1-chess-enforcer-firebase.cloudfunctions.net/getNewChessBoard', fetchOpts)
+    const res = await fetch('https://us-central1-chess-enforcer-firebase.cloudfunctions.net/getNewChessBoard')
     const board:Board = await res.json()
     return board
 }
@@ -52,7 +48,6 @@ export const GetNewBoard = async (): Promise<Board> => {
  */
 export const MovePiece = async (fromSquare: Square, toSquare: Square, board: Board, currentTeam: Team) => {
     const res = await fetch('https://us-central1-chess-enforcer-firebase.cloudfunctions.net/moveChessPiece', {
-        ...fetchOpts,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
