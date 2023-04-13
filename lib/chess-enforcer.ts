@@ -1,14 +1,14 @@
 export enum Rank { one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7, eight = 8 }
 
-export const File = {
-    a: 'a',
-    b: 'b',
-    c: 'c',
-    d: 'd',
-    e: 'e',
-    f: 'f',
-    g: 'g',
-    h: 'h'
+export enum File {
+    a = 'a',
+    b = 'b',
+    c = 'c',
+    d = 'd',
+    e = 'e',
+    f = 'f',
+    g = 'g',
+    h = 'h'
 }
 
 export enum Team { black = 'black', white = 'white' }
@@ -24,6 +24,7 @@ export enum PieceDescription {
 export interface Piece { color?: Team; description?: PieceDescription; symbol?: string; startRank: Rank; startFile: string; };
 export interface Square { color: Team, piece?: Piece, rank: Rank, file: string };
 export type Board = Square[];
+export type Board2d = {[key: string]: Square}[]
 
 /**
  * @returns A board with all pieces in starting configuration
@@ -60,4 +61,28 @@ export const MovePiece = async (fromSquare: Square, toSquare: Square, board: Boa
         })
     })
     return await res.json()
+}
+
+export const toBoard2d = (board: Board): Board2d => {
+    const output: Board2d = []
+    let i = -1
+    board.forEach((square, index) => {
+        if(index % 8 == 0) {
+            output.push({})
+            i++
+        }
+        let file: File
+        switch(index % 8) {
+            case 0: file = File.a; break;
+            case 1: file = File.b; break;
+            case 2: file = File.c; break;
+            case 3: file = File.d; break;
+            case 4: file = File.e; break;
+            case 5: file = File.f; break;
+            case 6: file = File.g; break;
+            case 7: file = File.h; break;
+        }
+        output[i][File[file]] = square
+    })
+    return output
 }
