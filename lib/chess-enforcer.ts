@@ -97,10 +97,3 @@ export const toBoard2d = (board: Board): Board2d => {
     })
     return output
 }
-
-const main = async () => {
-    const board = toBoard2d(await GetNewBoard(true))
-    console.log(board[5][File.a].piece.startRank)
-}
-
-main()
