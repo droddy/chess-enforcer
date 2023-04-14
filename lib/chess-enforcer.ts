@@ -21,17 +21,28 @@ export enum PieceDescription {
     queen = 'queen'
 }
 
-export interface Piece { color?: Team; description?: PieceDescription; symbol?: string; startRank: Rank; startFile: string; };
-export interface Square { color: Team, piece?: Piece, rank: Rank, file: string };
+export interface Piece { color?: Team; description?: PieceDescription; symbol?: string; startRank: Rank; startFile: File; };
+export interface Square { color: Team, piece?: Piece, rank: Rank, file: File};
 export type Board = Square[];
 export type Board2d = {[key: string]: Square}[]
+
+const addGhostPieces = (board: Board): Board => {
+    const output: Board = JSON.parse(JSON.stringify(board));
+    for(const square of output) {
+        if(!square.piece) {
+            square.piece = {startRank: square.rank, startFile: square.file}
+        }
+    }
+    return output
+}
 
 /**
  * @returns A board with all pieces in starting configuration
  */
-export const GetNewBoard = async (): Promise<Board> => {
+export const GetNewBoard = async (ghostPieces = false): Promise<Board> => {
     const res = await fetch('https://us-central1-chess-enforcer-firebase.cloudfunctions.net/getNewChessBoard')
-    const board:Board = await res.json()
+    let board:Board = await res.json()
+    if(ghostPieces) board = addGhostPieces(board)
     return board
 }
 
@@ -86,3 +97,10 @@ export const toBoard2d = (board: Board): Board2d => {
     })
     return output
 }
+
+const main = async () => {
+    const board = toBoard2d(await GetNewBoard(true))
+    console.log(board[5][File.a].piece.startRank)
+}
+
+main()
