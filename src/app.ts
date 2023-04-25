@@ -2,6 +2,8 @@ import { GetNewBoard, MovePiece } from "./board-commands";
 import { Team } from "./enum";
 import Board, { Square } from "./types";
 let board = GetNewBoard();
+
+// get some squares for the test moves
 let a6 = board.find((square) => square.file === 'a' && square.rank === 6);
 let a7 = board.find((square) => square.file === 'a' && square.rank === 7);
 let a8 = board.find((square) => square.file === 'a' && square.rank === 8);
@@ -30,6 +32,7 @@ let h2 = board.find((square) => square.file === 'h' && square.rank === 2);
 let h3 = board.find((square) => square.file === 'h' && square.rank === 3);
 let h4 = board.find((square) => square.file === 'h' && square.rank === 4);
 
+// print the board to the console any time to see the results
 const printBoard = () => {
     let boardCopy = [[], [], [], [], [], [], [], []];
 
@@ -47,8 +50,8 @@ const printBoard = () => {
     console.table(boardCopy);
 }
 
+// on your mark, get set, go!
 printBoard();
-
 
 let newBoard: Board
 
