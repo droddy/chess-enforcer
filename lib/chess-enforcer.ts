@@ -21,7 +21,7 @@ export enum PieceDescription {
     queen = 'queen'
 }
 
-export interface Piece { color?: Team; description?: PieceDescription; symbol?: string; startRank: Rank; startFile: File; };
+export interface Piece { color?: Team; description?: PieceDescription; symbol?: string; value?: number; startRank: Rank; startFile: File; };
 export interface Square { color: Team, piece?: Piece, rank: Rank, file: File};
 export type Board = Square[];
 export type Board2d = {[key: string]: Square}[]
